@@ -1,7 +1,6 @@
 import express from "express"
-const express = express()
 const productRouter=express.Router()
-import getProducts from "../controllers/productController"
+import getProducts from "../controllers/productController.js"
 
 productRouter.get("/", getProducts);
 

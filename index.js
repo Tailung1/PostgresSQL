@@ -1,7 +1,6 @@
-import productRouter from "./routes/productRouters";
-require("dotenv").config();
-const express = require("express");
-const userRouters = require("./src/routes/userRoutes");
+import productRouter from "./routes/productRouters.js";
+import dotenv from "dotenv"
+import express from "express"
 const app = express();
 const port = process.env.port || 3000;
 
