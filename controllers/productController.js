@@ -1,13 +1,13 @@
-// import pool from "pool";
+import pool from "../config/db.config";
 
 export default async function getProducts(req, res) {
   return res.json({
     message: "Welcome to the Express PostgresSQL API",
   });
-  //   try {
-  //     const result = await pool.query("SELECT * FROM Ecommerse");
-  //   } catch (ererrror) {
-  //     console.error("Error executing query", error.stack);
-  //     res.status(500).json({ error: "Internal server error" });
-  //   }
+    try {
+      const result = await pool.query("SELECT * FROM Ecommerse");
+    } catch (ererrror) {
+      console.error("Error executing query", error.stack);
+      res.status(500).json({ error: "Internal server error" });
+    }
 }
