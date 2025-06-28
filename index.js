@@ -1,3 +1,4 @@
+import productRouter from "./routes/productRouters";
 require("dotenv").config();
 const express = require("express");
 const userRouters = require("./src/routes/userRoutes");
@@ -13,7 +14,7 @@ app.get("/", (req, res) => {
   res.json("Welcome to the Express PostgreSQL API");
 });
 
-app.use("/api/products", userRouters);
+app.use("/api/products", productRouter);
 
 app.use((err, req, next) => {
   console.log(err.stack);
