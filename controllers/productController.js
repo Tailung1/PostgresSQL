@@ -13,7 +13,7 @@ async function createProduct(req, res) {
   const { name, category, price } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO untitled_table (name,category,price) VALUES ( $1, $2, $3) RETURNING *",
+      "INSERT INTO untitled_table (name,category,price) VALUES ($1, $2, $3) RETURNING *",
       [name, category, price]
     );
     res.status(201).json(result.rows[0]);
@@ -23,4 +23,23 @@ async function createProduct(req, res) {
   }
 }
 
-export { getProducts, createProduct };
+async function updateProduct(req, res) {
+  const { id } = req.params;
+  const { category, name, price } = req.body;
+
+  try {
+    const result = await pool.query(
+      "UPDATE untitled_table SET category= $1, name= $2, price=$3 WHERE id = $4 RETURNING *",
+      [category, name, price, id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    console.error("Error updating product", err.stack);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+export { getProducts, createProduct, updateProduct };
