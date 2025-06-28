@@ -25,6 +25,7 @@ async function createProduct(req, res) {
 
 async function updateProduct(req, res) {
   const { id } = req.params;
+
   const { category, name, price } = req.body;
 
   try {
@@ -42,4 +43,24 @@ async function updateProduct(req, res) {
   }
 }
 
-export { getProducts, createProduct, updateProduct };
+async function deleteProdct(req, res) {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM untitled_table WHERE id = $1 RETURNING *",
+      [id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "Product deleted", product: result.rows[0] });
+  } catch (err) {
+    console.error("Error deleting product", err.stack);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+export { getProducts, createProduct, updateProduct, deleteProdct };

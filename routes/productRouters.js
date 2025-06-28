@@ -4,8 +4,9 @@ import {
   getProducts,
   createProduct,
   updateProduct,
+  deleteProdct,
 } from "../controllers/productController.js";
 
 productRouter.route("/").get(getProducts).post(createProduct);
-productRouter.route("/:id").put(updateProduct);
+productRouter.route("/:id").put(updateProduct).delete(deleteProdct);
 export default productRouter;
