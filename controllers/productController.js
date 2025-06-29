@@ -9,6 +9,22 @@ async function getProducts(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+async function getOneProduct(req, res) {
+  const { id } = req.params;
+  try {
+    const result = await pool.query(
+      "SELECT * FROM untitled_table WHERE id=$1",
+      [id]
+    );
+    if (result.rowCount === 0) {
+      res.status(404).json({ message: "Product not found" });
+    }
+    res.status(200).json(result.rows[0]);
+  } catch (err) {
+    res.status(404).json({ error: "Internal server error" });
+  }
+}
+
 async function createProduct(req, res) {
   const { name, category, price } = req.body;
   try {
@@ -63,4 +79,10 @@ async function deleteProdct(req, res) {
   }
 }
 
-export { getProducts, createProduct, updateProduct, deleteProdct };
+export {
+  getProducts,
+  createProduct,
+  updateProduct,
+  deleteProdct,
+  getOneProduct,
+};
