@@ -82,7 +82,7 @@ async function deleteProdct(req, res) {
 async function getCategoryStats(req, res) {
   try {
     const result = await pool.query(
-      "SELECT category, COUNT(*) FROM untitled_table GROUP BY category"
+      "SELECT category, COUNT(*), MAX(price), AVG(price) as average_Price FROM untitled_table GROUP BY category"
     );
     res.json(result.rows);
   } catch (err) {
