@@ -6,9 +6,11 @@ import {
   updateProduct,
   deleteProdct,
   getOneProduct,
+  getCategoryStats,
 } from "../controllers/productController.js";
 
 productRouter.route("/").get(getProducts).post(createProduct);
+productRouter.get("/getCategoryStats", getCategoryStats);
 productRouter
   .route("/:id")
   .get(getOneProduct)

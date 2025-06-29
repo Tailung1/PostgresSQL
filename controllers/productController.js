@@ -79,10 +79,23 @@ async function deleteProdct(req, res) {
   }
 }
 
+async function getCategoryStats(req, res) {
+  try {
+    const result = await pool.query(
+      "SELECT category, COUNT(*) FROM untitled_table GROUP BY category"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error deleting product", err.stack);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 export {
   getProducts,
   createProduct,
   updateProduct,
   deleteProdct,
   getOneProduct,
+  getCategoryStats,
 };
