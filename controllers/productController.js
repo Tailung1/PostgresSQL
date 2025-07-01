@@ -16,14 +16,18 @@ async function getProducts(req, res) {
 async function getOneProduct(req, res) {
   const { id } = req.params;
   try {
-    const result = await pool.query(
-      "SELECT * FROM products WHERE id=$1",
-      [id]
-    );
-    if (result.rowCount === 0) {
-      res.status(404).json({ message: "Products not found" });
-    }
-    res.status(200).json(result.rows[0]);
+    // const result = await pool.query(
+    //   "SELECT * FROM products WHERE id=$1",
+    //   [id]
+    // );
+    // if (result.rowCount === 0) res.status(404).json({ message: "Products not found" });
+    const product = await prisma.products.findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!product)
+      res.status(404).json({ message: "Product not found" });
+
+    res.status(200).json(product);
   } catch (err) {
     res.status(404).json({ error: "Internal server error" });
   }
