@@ -56,14 +56,18 @@ async function updateProduct(req, res) {
   const { category, name, price } = req.body;
 
   try {
-    const result = await pool.query(
-      "UPDATE products SET category= $1, name= $2, price=$3 WHERE id = $4 RETURNING *",
-      [category, name, price, id]
-    );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "products not found" });
-    }
-    res.status(200).json(result.rows[0]);
+    // const result = await pool.query(
+    //   "UPDATE products SET category= $1, name= $2, price=$3 WHERE id = $4 RETURNING *",
+    //   [category, name, price, id]
+    // );
+    // if (result.rows.length === 0) {
+    //   return res.status(404).json({ error: "products not found" });
+    // }
+    const updatedProduct = await prisma.products.update({
+      where: { id: parseInt(id) },
+      data: { category, name, price },
+    });
+    res.status(200).json(updatedProduct);
   } catch (err) {
     console.error("Error updating product", err.stack);
     res.status(500).json({ error: "Internal server error" });
