@@ -114,6 +114,7 @@ async function getCategoryStats(req, res) {
     });
     const formatedResult = result.map((item) => ({
       category: item.category,
+      count:item._count,
       minPrice: item._min.price,
       avgPrice: item._avg.price,
       maxPrice: item._max.price,
