@@ -15,9 +15,9 @@ model category {
 }
 
 model products {
-  id         Int       @id(map: "untitled_table_pkey") @default(autoincrement())
-  created_at DateTime  @default(now()) @db.Timestamp(6)
-  name       String?   @db.VarChar(255)
-  categoryID Int
+  id         Int      @id(map: "untitled_table_pkey") @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamp(6)
+  name       String?  @db.VarChar(255)
+  categoryID Int @default(1)
   category   category @relation(fields: [categoryID], references: [id])
 }
