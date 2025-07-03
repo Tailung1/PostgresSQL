@@ -6,7 +6,15 @@ const prisma = new PrismaClient();
 async function getProducts(req, res) {
   try {
     // const result = await pool.query("SELECT * FROM products");
-    const result = await prisma.products.findMany();
+    const result = await prisma.products.findMany({
+      include: {
+        category: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
     res.status(200).json(result);
   } catch (err) {
     console.error("Error executing query", err.stack);
