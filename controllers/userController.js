@@ -23,10 +23,9 @@ async function createUser(req, res) {
   }
 }
 
-
 async function updateUserInfo(req, res) {
   const { firstName, lastName, email } = req.body;
-  const {id} = req.params;
+  const { id } = req.params;
   try {
     const updated = await prisma.users.update({
       where: { id: parseInt(id) },
@@ -41,4 +40,21 @@ async function updateUserInfo(req, res) {
     res.status(404).json({ message: err.message });
   }
 }
-export { getUser, createUser, updateUserInfo };
+
+async function deleteUser(req, res) {
+  const { id } = req.params;
+  try {
+    const deletedUser = await prisma.users.delete({
+      where: { id: parseInt(id) },
+    });
+    if (!deletedUser) {
+      res.json({ message: "User not found" });
+    } else {
+      res.json({message:"Product Deleted successfully",deletedUser:deletedUser});
+    }
+  } catch (err) {
+    res.json({ message: err.message });
+  }
+}
+
+export { getUser, createUser, updateUserInfo, deleteUser };
