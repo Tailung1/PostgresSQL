@@ -8,8 +8,6 @@ import {
   deleteProdct,
   getOneProduct,
   getCategoryStats,
-  getUser,
-  createUser,
 } from "../controllers/productController.js";
 
 productRouter.route("/").get(getProducts).post(createProduct);
@@ -20,6 +18,5 @@ productRouter
   .put(updateProduct)
   .delete(deleteProdct);
 
-userRouter.route("/").get(getUser).post(createUser);
 export default productRouter;
 

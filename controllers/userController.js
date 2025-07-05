@@ -1,6 +1,6 @@
-import { json } from "express";
-
-export async function getUser(req, res) {
+ 
+ 
+ async function getUser(req, res) {
   try {
     const result = await prisma.users.findMany();
     res.status(200).json(result);
@@ -9,7 +9,7 @@ export async function getUser(req, res) {
   }
 }
 
-export async function createUser(req, res) {
+ async function createUser(req, res) {
   const { firstName, lastName, email } = req.body();
   try {
     const newUser = await prisma.users.create({

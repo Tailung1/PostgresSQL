@@ -143,6 +143,5 @@ export {
   deleteProdct,
   getOneProduct,
   getCategoryStats,
-
 };
 
