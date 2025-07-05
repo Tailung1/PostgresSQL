@@ -1,8 +1,8 @@
- import {PrismaClient} from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
 
- const prisma= new PrismaClient()
- 
- async function getUser(req, res) {
+const prisma = new PrismaClient();
+
+async function getUser(req, res) {
   try {
     const result = await prisma.users.findMany();
     res.status(200).json(result);
@@ -11,8 +11,8 @@
   }
 }
 
- async function createUser(req, res) {
-  const { firstName, lastName, email } = req.body();
+async function createUser(req, res) {
+  const { firstName, lastName, email } = req.body;
   try {
     const newUser = await prisma.users.create({
       data: { firstName, lastName, email },
