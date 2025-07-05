@@ -23,4 +23,22 @@ async function createUser(req, res) {
   }
 }
 
-export { getUser, createUser };
+
+async function updateUserInfo(req, res) {
+  const { firstName, lastName, email } = req.body;
+  const {id} = req.params;
+  try {
+    const updated = await prisma.users.update({
+      where: { id: parseInt(id) },
+      data: { firstName, lastName, email },
+    });
+    if (!updated) {
+      res.json({ message: "Product not found" });
+    } else {
+      res.json(updated);
+    }
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+}
+export { getUser, createUser, updateUserInfo };
