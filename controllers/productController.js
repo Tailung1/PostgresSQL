@@ -143,5 +143,4 @@ export {
   deleteProdct,
   getOneProduct,
   getCategoryStats,
-  buyProduct,
 };
