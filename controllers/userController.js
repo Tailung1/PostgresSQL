@@ -17,10 +17,10 @@ async function getUser(req, res) {
     const user = await prisma.users.findUnique({
       where: { id: parseInt(id) },
     });
-    if(!user) {
-        res.json({messgae:"User not found"})
+    if (!user) {
+      res.json({ messgae: "User not found" });
     } else {
-        res.json(user)
+      res.json(user);
     }
   } catch (err) {
     res.json({ message: err.message });

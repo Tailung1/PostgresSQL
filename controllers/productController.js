@@ -134,7 +134,7 @@ async function getCategoryStats(req, res) {
   }
 }
 
-
+async function buyProduct(req, res) {}
 
 export {
   getProducts,
@@ -143,5 +143,5 @@ export {
   deleteProdct,
   getOneProduct,
   getCategoryStats,
+  buyProduct,
 };
-
