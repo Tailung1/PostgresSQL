@@ -27,12 +27,10 @@ model users {
   firstName String? @db.VarChar(255)
   lastName  String? @db.VarChar(255)
   email     String? @db.VarChar(255)
-  products usersProducts[]
 }
 
 model usersProducts {
-  id         Int @id @default(autoincrement())
-  userID     Int @default(1)
-  categoryID Int @default(1)
-  user users @relation(fields:[userID],references:[id])
+  id        Int      @id @default(autoincrement())
+  userID    Decimal? @default(1) @db.Decimal
+  productID Decimal? @default(1) @db.Decimal
 }
