@@ -24,13 +24,9 @@ model products {
 
 model users {
   id        Int     @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.timestamp(6)
   firstName String? @db.VarChar(255)
   lastName  String? @db.VarChar(255)
   email     String? @db.VarChar(255)
 }
 
-model usersProducts {
-  id        Int      @id @default(autoincrement())
-  userID    Decimal? @default(1) @db.Decimal
-  productID Decimal? @default(1) @db.Decimal
-}
