@@ -71,7 +71,6 @@ async function deleteUser(req, res) {
         deletedUser: deletedUser,
       });
     }
-    
   } catch (err) {
     res.json({ message: err.message });
   }
