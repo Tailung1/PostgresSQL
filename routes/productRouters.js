@@ -1,6 +1,7 @@
 import express from "express";
 const productRouter = express.Router();
 
+
 import {
   getProducts,
   createProduct,
