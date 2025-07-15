@@ -8,18 +8,20 @@ datasource db {
 }
 
 model category {
-  id         Int        @id(map: "categories_pkey") @default(autoincrement())
-  created_at DateTime   @default(now()) @db.Timestamp(6)
-  name       String?    @db.VarChar(255)
-  description String? @db.VarChar(255)
-  products   products[]
+  id          Int        @id(map: "categories_pkey") @default(autoincrement())
+  created_at  DateTime   @default(now()) @db.Timestamp(6)
+  name        String?    @db.VarChar(255)
+  description String?    @db.VarChar(255)
+  products    products[]
 }
 
 model products {
   id         Int      @id(map: "untitled_table_pkey") @default(autoincrement())
   created_at DateTime @default(now()) @db.Timestamp(6)
   name       String?  @db.VarChar(255)
-  description String? @db.VarChar(255)
+  price      Float?
+  stock      Int?
+  slug       String?
   categoryID Int      @default(1)
   category   category @relation(fields: [categoryID], references: [id])
 }
@@ -29,5 +31,5 @@ model users {
   created_at DateTime @default(now()) @db.Timestamp(6)
   firstName  String?  @db.VarChar(255)
   lastName   String?  @db.VarChar(255)
-  email      String?  @db.VarChar(255) 
+  email      String?  @db.VarChar(255)
 }

@@ -5,13 +5,13 @@ async function main() {
   const electronics = await prisma.category.create({
     data: {
       name: "Electronics",
-      description: "Devices and gadges",
+      description: "Devices and gadgets",
     },
   });
-  const clothing = await prisma.products.create({
+  const clothing = await prisma.category.create({
     data: {
       name: "Clothing",
-      descirption: "Apparel and fashion",
+      description: "Apparel and fashion",
     },
   });
   await prisma.products.createMany({
@@ -24,11 +24,11 @@ async function main() {
         categoryID: electronics.id,
       },
       {
-        name: "Samsung Galaxy S24",
+        name: "T-shirt",
         price: 779.99,
         stock: 15,
-        slug: "samsung galaxy s24",
-        categoryID: electronics.id,
+        slug: "t-shirt",
+        categoryID: clothing.id,
       },
     ],
   });
@@ -36,7 +36,7 @@ async function main() {
 }
 main()
   .catch((e) => {
-    console.error("Sening failed", e);
+    console.error("Sending failed", e);
     process.exit(1);
   })
   .finally(() => prisma.$disconnect());
