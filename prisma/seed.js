@@ -8,4 +8,10 @@ async function main() {
       description: "Devices and gadges",
     },
   });
+  const clothing = await prisma.products.create({
+    data: {
+      name: "Clothing",
+      descirption: "Apparel and fashion",
+    },
+  });
 }
