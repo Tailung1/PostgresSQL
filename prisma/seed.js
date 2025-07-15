@@ -30,6 +30,13 @@ async function main() {
         slug: "t-shirt",
         categoryID: clothing.id,
       },
+      {
+        name: "Shoes",
+        price: 59.99,
+        stock: 5,
+        slug: "shoes",
+        categoryID: clothing.id,
+      },
     ],
   });
   console.log("Sending completed");
