@@ -11,6 +11,7 @@ model category {
   id         Int        @id(map: "categories_pkey") @default(autoincrement())
   created_at DateTime   @default(now()) @db.Timestamp(6)
   name       String?    @db.VarChar(255)
+  description String? @db.VarChat(255)
   products   products[]
 }
 
@@ -18,6 +19,7 @@ model products {
   id         Int      @id(map: "untitled_table_pkey") @default(autoincrement())
   created_at DateTime @default(now()) @db.Timestamp(6)
   name       String?  @db.VarChar(255)
+  description String? @db.VarChat(255)
   categoryID Int      @default(1)
   category   category @relation(fields: [categoryID], references: [id])
 }
