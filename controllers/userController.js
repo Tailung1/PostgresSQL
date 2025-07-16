@@ -65,7 +65,7 @@ async function deleteUser(req, res) {
     });
     if (!deletedUser) {
       res.json({ message: "User not found" });
-    } else { 
+    } else {
       res.json({
         message: "Product Deleted successfully",
         deletedUser: deletedUser,
