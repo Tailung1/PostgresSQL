@@ -1,7 +1,6 @@
 import express from "express";
 const productRouter = express.Router();
 
-
 import {
   getProducts,
   createProduct,
@@ -20,4 +19,3 @@ productRouter
   .delete(deleteProdct);
 
 export default productRouter;
-
