@@ -134,8 +134,6 @@ async function getCategoryStats(req, res) {
   }
 }
 
-
-
 export {
   getProducts,
   createProduct,
