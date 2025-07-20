@@ -76,5 +76,4 @@ async function deleteUser(req, res) {
   }
 }
 
-
 export { getUsers, createUser, updateUserInfo, deleteUser, getUser };
