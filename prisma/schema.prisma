@@ -16,20 +16,30 @@ model category {
 }
 
 model products {
-  id         Int      @id(map: "untitled_table_pkey") @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  name       String?  @db.VarChar(255)
-  price      Float?
-  stock      Int?
-  slug       String?
-  categoryID Int      @default(1)
-  category   category @relation(fields: [categoryID], references: [id])
+  id           Int            @id(map: "untitled_table_pkey") @default(autoincrement())
+  created_at   DateTime       @default(now()) @db.Timestamp(6)
+  name         String?        @db.VarChar(255)
+  price        Float?
+  stock        Int?
+  slug         String?
+  categoryID   Int            @default(1)
+  category     category       @relation(fields: [categoryID], references: [id])
+  userProducts userProducts[]
 }
 
 model users {
-  id         Int      @id @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamp(6)
-  firstName  String?  @db.VarChar(255)
-  lastName   String?  @db.VarChar(255)
-  email      String?  @db.VarChar(255)
+  id           Int            @id @default(autoincrement())
+  created_at   DateTime       @default(now()) @db.Timestamp(6)
+  firstName    String?        @db.VarChar(255)
+  lastName     String?        @db.VarChar(255)
+  email        String?        @db.VarChar(255)
+  userProducts userProducts[]
+}
+
+model userProducts {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  productId Int
+  user      users    @relation(fields: [userId], references: [id])
+  product   products @relation(fields: [productId], references: [id])
 }
