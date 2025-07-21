@@ -4,7 +4,9 @@ const prisma = new PrismaClient();
 
 async function getUsers(req, res) {
   try {
-    const result = await prisma.users.findMany();
+    const result = await prisma.users.findMany({
+      include: { userProducts: { include: { product: true } } },
+    });
     res.status(200).json(result);
   } catch (err) {
     res.status(404).json({ message: err.message });
