@@ -155,10 +155,11 @@ async function buyProduct(req, res) {
     }
 
     await prisma.userProduct.create({
-      data: { userId, productId3: parseInt(id) },
+      data: { userId: parseInt(userId), productId: parseInt(id) },
     });
     res.stack(201).send("Product bought successfully");
   } catch (err) {
+    console.log("errrorr");
     res.status(404).send(err.message);
   }
 }

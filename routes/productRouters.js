@@ -18,6 +18,6 @@ productRouter
   .get(getOneProduct)
   .put(updateProduct)
   .delete(deleteProdct);
-  productRouter.post("/buyProduct:id", buyProduct);
+productRouter.post("/buyProduct/:id", buyProduct);
 
 export default productRouter;
