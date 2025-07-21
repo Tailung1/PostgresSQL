@@ -135,7 +135,8 @@ async function getCategoryStats(req, res) {
 }
 
 async function buyProduct(req, res) {
-  const id = req.params;
+  const { id } = req.params;
+
   try {
     const { userId } = req.body;
     const user = await prisma.users.findUnique({
@@ -144,7 +145,7 @@ async function buyProduct(req, res) {
     if (!user) {
       return res.status(404).send("User not found");
     }
-    const product = await prisma.users.findUnique({
+    const product = await prisma.products.findUnique({
       where: { id: parseInt(id) },
     });
     if (!product) {
@@ -154,8 +155,9 @@ async function buyProduct(req, res) {
     }
 
     await prisma.userProduct.create({
-      data: { userId, prodoctId: parseInt(id) },
+      data: { userId, productId3: parseInt(id) },
     });
+    res.stack(201).send("Product bought successfully");
   } catch (err) {
     res.status(404).send(err.message);
   }
