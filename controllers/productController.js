@@ -153,13 +153,16 @@ async function buyProduct(req, res) {
     } else if (product.stock < 1) {
       return res.status(404).send("Stock is 0");
     }
+    await prisma.products.update({
+      where: { id: parseInt(id)},
+      data:{stock:product.stock-1}
+    });
 
-    await prisma.userProduct.create({
+    await prisma.userProducts.create({
       data: { userId: parseInt(userId), productId: parseInt(id) },
     });
-    res.stack(201).send("Product bought successfully");
+    res.status(201).send("Product bought successfully");
   } catch (err) {
-    console.log("errrorr");
     res.status(404).send(err.message);
   }
 }
