@@ -154,8 +154,8 @@ async function buyProduct(req, res) {
       return res.status(404).send("Stock is 0");
     }
     await prisma.products.update({
-      where: { id: parseInt(id)},
-      data:{stock:product.stock-1}
+      where: { id: parseInt(id) },
+      data: { stock: product.stock - 1 },
     });
 
     await prisma.userProducts.create({
