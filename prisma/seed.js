@@ -17,7 +17,7 @@ async function main() {
   await prisma.products.createMany({
     data: [
       {
-        name: "iPhone 15",
+        name: "iPhone 17",
         price: 999.99,
         stock: 20,
         slug: "iphone-15",
