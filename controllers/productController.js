@@ -166,6 +166,7 @@ async function buyProduct(req, res) {
     res.status(404).send(err.message);
   }
 }
+
 export {
   getProducts,
   createProduct,
