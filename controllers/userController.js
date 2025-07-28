@@ -84,13 +84,26 @@ async function signup(req, res) {
   const hashedPassword = await bcrypt.hash(password, 10);
   try {
     const newUser = await prisma.users.create({
-      data: { firstName, lastName, email, password:hashedPassword },
+      data: { firstName, lastName, email, password: hashedPassword },
     });
     res.status(201).json(newUser);
   } catch (err) {
     res.status(500).json({ error: "Failed to signup" });
   }
 }
+async function signin(req, res) {
+  const { email, password } = req.body;
+  const user = await prisma.users.findUnique({ where: { email } });
+  const isPasswordValid = await bcrypt.compare(
+    password,
+    user.password
+  );
+  if (!isPasswordValid) {
+    return res.status(500).json({ message: "Invalid credentials" });
+  }
+  res.json({ message: "Logined successfully" });
+}
+
 export {
   getUsers,
   createUser,
@@ -98,4 +111,5 @@ export {
   deleteUser,
   getUser,
   signup,
+  signin,
 };
