@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -77,11 +78,13 @@ async function deleteUser(req, res) {
     res.json({ message: err.message });
   }
 }
+
 async function signup(req, res) {
   const { firstName, lastName, email, password } = req.body;
+  const hashedPassword = await bcrypt.hash(password, 10);
   try {
     const newUser = await prisma.users.create({
-      data: { firstName, lastName, email, password },
+      data: { firstName, lastName, email, password:hashedPassword },
     });
     res.status(201).json(newUser);
   } catch (err) {
