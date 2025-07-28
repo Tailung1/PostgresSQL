@@ -77,5 +77,22 @@ async function deleteUser(req, res) {
     res.json({ message: err.message });
   }
 }
-
-export { getUsers, createUser, updateUserInfo, deleteUser, getUser };
+async function signup(req, res) {
+  const { firstName, lastName, email, password } = req.body;
+  try {
+    const newUser = await prisma.users.create({
+      data: { firstName, lastName, email, password },
+    });
+    res.status(201).json(newUser);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to signup" });
+  }
+}
+export {
+  getUsers,
+  createUser,
+  updateUserInfo,
+  deleteUser,
+  getUser,
+  signup,
+};
