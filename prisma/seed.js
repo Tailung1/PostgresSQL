@@ -14,6 +14,7 @@ async function main() {
       description: "Apparel and fashion",
     },
   });
+
   await prisma.products.createMany({
     data: [
       {
