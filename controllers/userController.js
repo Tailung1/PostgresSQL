@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -101,7 +102,10 @@ async function signin(req, res) {
   if (!isPasswordValid) {
     return res.status(500).json({ message: "Invalid credentials" });
   }
-  res.json({ message: "Logined successfully" });
+  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+  res.json({ token });
 }
 
 export {

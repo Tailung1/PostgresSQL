@@ -12,7 +12,7 @@ import {
 
 userRouter.route("/").get(getUsers).post(createUser);
 userRouter.route("/:id").get(getUser);
-userRouter.route("/signin").get(signin);
+userRouter.route("/signin").post(signin);
 userRouter.route("/:id").put(updateUserInfo).delete(deleteUser);
 userRouter.route("/signup").post(signup);
 
