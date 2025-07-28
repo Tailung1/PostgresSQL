@@ -10,6 +10,7 @@ import {
   getCategoryStats,
   buyProduct,
 } from "../controllers/productController.js";
+import { auth } from "../middleware/auth.js";
 
 productRouter.route("/").get(getProducts).post(createProduct);
 productRouter.get("/getCategoryStats", getCategoryStats);
@@ -18,6 +19,6 @@ productRouter
   .get(getOneProduct)
   .put(updateProduct)
   .delete(deleteProdct);
-productRouter.post("/buyProduct/:id", buyProduct);
+productRouter.post("/buyProduct/:id", auth, buyProduct);
 
 export default productRouter;
