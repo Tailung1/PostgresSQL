@@ -105,8 +105,8 @@ async function signin(req, res) {
   const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
     expiresIn: "1h",
   });
-  delete user.password
-  res.json({ token,user });
+  delete user.password;
+  res.json({ token, user });
 }
 
 export {
