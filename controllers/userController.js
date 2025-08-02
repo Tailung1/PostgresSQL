@@ -91,6 +91,7 @@ async function signup(req, res) {
   } catch (err) {
     res.status(500).json({ error: "Failed to signup" });
   }
+  
 }
 async function signin(req, res) {
   const { email, password } = req.body;
