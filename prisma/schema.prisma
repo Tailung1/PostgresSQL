@@ -23,7 +23,7 @@ model products {
   stock        Int
   slug         String?
   categoryID   Int            @default(1)
-  category     category       @relation(fields: [categoryID], references: [id]) 
+  category     category       @relation(fields: [categoryID], references: [id])
   userProducts userProducts[]
 }
 
@@ -34,8 +34,8 @@ model users {
   lastName     String         @db.VarChar(255)
   email        String         @unique @db.VarChar(255)
   password     String         @db.VarChar(255)
-  roleId         Int          @default(2)
-  user     roles          @relation(fields: [roleId], references: [id])
+  roleId       Int            @default(2)
+  user         roles          @relation(fields: [roleId], references: [id])
   userProducts userProducts[]
 }
 

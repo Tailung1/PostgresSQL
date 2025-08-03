@@ -91,11 +91,13 @@ async function signup(req, res) {
   } catch (err) {
     res.status(500).json({ error: "Failed to signup" });
   }
-  
 }
 async function signin(req, res) {
   const { email, password } = req.body;
-  const user = await prisma.users.findUnique({ where: { email } });
+  const user = await prisma.users.findUnique({
+    where: { email },
+    include: { user: true },
+  });
   const isPasswordValid = await bcrypt.compare(
     password,
     user.password
@@ -103,9 +105,13 @@ async function signin(req, res) {
   if (!isPasswordValid) {
     return res.status(500).json({ message: "Invalid credentials" });
   }
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
+  const token = jwt.sign(
+    { id: user.id, role: user.name },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
   delete user.password;
   res.json({ token, user });
 }
