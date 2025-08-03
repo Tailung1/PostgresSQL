@@ -10,8 +10,6 @@ export const auth = (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized2" });
     }
     req.user = decoded;
-    console.log(decoded);
-
     next();
   });
 };
