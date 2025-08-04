@@ -10,15 +10,15 @@ import {
   getCategoryStats,
   buyProduct,
 } from "../controllers/productController.js";
-import { auth } from "../middleware/auth.js";
+import { auth,isAdmin} from "../middleware/auth.js";
 
 productRouter.route("/").get(getProducts).post(createProduct);
 productRouter.get("/getCategoryStats", getCategoryStats);
 productRouter
   .route("/:id")
   .get(getOneProduct)
-  .put(updateProduct)
-  .delete(deleteProdct);
+  .put(auth,isAdmin, updateProduct)
+  .delete(auth,isAdmin, deleteProdct);
 productRouter.post("/buyProduct/:id", auth, buyProduct);
 
 export default productRouter;

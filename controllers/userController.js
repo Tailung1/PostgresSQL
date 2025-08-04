@@ -96,7 +96,7 @@ async function signin(req, res) {
   const { email, password } = req.body;
   const user = await prisma.users.findUnique({
     where: { email },
-    include: { user: true },
+    include: { userRole: true },
   });
   const isPasswordValid = await bcrypt.compare(
     password,
@@ -106,12 +106,13 @@ async function signin(req, res) {
     return res.status(500).json({ message: "Invalid credentials" });
   }
   const token = jwt.sign(
-    { id: user.id, role: user.name },
+    { id: user.id, role: user.userRole.name },
     process.env.JWT_SECRET,
     {
       expiresIn: "1h",
     }
   );
+
   delete user.password;
   res.json({ token, user });
 }

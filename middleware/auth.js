@@ -10,6 +10,16 @@ export const auth = (req, res, next) => {
       return res.status(401).json({ message: "Unauthorized2" });
     }
     req.user = decoded;
+    console.log(decoded);
     next();
   });
+};
+
+export const isAdmin = (req, res, next) => {
+  if (req.user.role !== "admin") {
+    return res
+      .status(401)
+      .send({ message: "Only admin can acces this route" });
+  }
+  next();
 };

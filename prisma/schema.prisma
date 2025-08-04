@@ -35,7 +35,7 @@ model users {
   email        String         @unique @db.VarChar(255)
   password     String         @db.VarChar(255)
   roleId       Int            @default(2)
-  user         roles          @relation(fields: [roleId], references: [id])
+  userRole     roles          @relation(fields: [roleId], references: [id])
   userProducts userProducts[]
 }
 
