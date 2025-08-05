@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { empty } from "@prisma/client/runtime/library";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -210,6 +211,30 @@ export const forgotPassword = async (req, res, next) => {
     await transporter.sendMail(mailOptions);
 
     res.json({ message: "OTP sent to email" });
+  } catch (err) {
+    res.status(404).send({ message: err.message });
+  }
+};
+
+export const resetPassword = async (req, res, next) => {
+  const { email, otpCode, newPassword } = req.body;
+  try {
+    const user = await prisma.users.findUnique({
+      where: { email },
+    });
+
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+    if (user.otpCode !== otpCode || new Date() > user.otpExpiry) {
+      return res.status(400).send({ message: "Invalid otpCode" });
+    }
+    const newPass = await bcrypt.hash(newPassword, 10);
+    await prisma.users.update({
+      where: { id: user.id },
+      data: { password: newPass },
+    });
+    res.json({ message: "Password reseted sucessfully" });
   } catch (err) {
     res.status(404).send({ message: err.message });
   }
