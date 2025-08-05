@@ -151,9 +151,9 @@ export const forgotPassword = async (req, res, next) => {
     };
     await transporter.sendMail(mailOptions);
 
-    res.json({ messgae: "OTP sent to email" });
+    res.json({ message: "OTP sent to email" });
   } catch (err) {
-    res.json(404).send({ message: err.message });
+    res.status(404).send({ message: err.message });
   }
 };
 
