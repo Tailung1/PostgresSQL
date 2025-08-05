@@ -134,6 +134,7 @@ export const forgotPassword = async (req, res, next) => {
       where: { id: user.id },
       data: { otpCode, otpExpiry },
     });
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -141,6 +142,15 @@ export const forgotPassword = async (req, res, next) => {
         pass: process.env.EMAIL_PASS,
       },
     });
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "OTP for password reset",
+      text: `Your OTP for password is ${otpCode}`,
+    };
+    await transporter.sendMail(mailOptions);
+
     res.json({ messgae: "OTP sent to email" });
   } catch (err) {
     res.json(404).send({ message: err.message });
