@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
 
 const prisma = new PrismaClient();
 
@@ -132,6 +133,13 @@ export const forgotPassword = async (req, res, next) => {
     await prisma.users.update({
       where: { id: user.id },
       data: { otpCode, otpExpiry },
+    });
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
     });
     res.json({ messgae: "OTP sent to email" });
   } catch (err) {
