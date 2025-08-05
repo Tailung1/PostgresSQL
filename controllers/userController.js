@@ -229,10 +229,14 @@ export const resetPassword = async (req, res, next) => {
     if (user.otpCode !== otpCode || new Date() > user.otpExpiry) {
       return res.status(400).send({ message: "Invalid otpCode" });
     }
-    const newPass = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     await prisma.users.update({
       where: { id: user.id },
-      data: { password: newPass },
+      data: {
+        password: hashedPassword,
+        otpCode: null,
+        otpExpiry: null,
+      },
     });
     res.json({ message: "Password reseted sucessfully" });
   } catch (err) {
