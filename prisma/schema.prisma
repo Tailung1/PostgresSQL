@@ -37,7 +37,7 @@ model users {
   roleId       Int            @default(2)
   userRole     roles          @relation(fields: [roleId], references: [id])
   otpCode      String?        @db.VarChar(6)
-  otpExpire    DateTime?      @db.Timestamp(6)
+  otpExpiry    DateTime?      @db.Timestamp(6)
   userProducts userProducts[]
 }
 

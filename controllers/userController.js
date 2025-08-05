@@ -116,8 +116,28 @@ async function signin(req, res) {
   delete user.password;
   res.json({ token, user });
 }
-
-
+export const forgotPassword = async (req, res, next) => {
+  const { email } = req.body;
+  try {
+    const user = await prisma.users.findUnique({
+      where: { email },
+    });
+    if (!user) {
+      res.status(404).send({ message: "User not found" });
+    }
+    const otpCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+    await prisma.users.update({
+      where: { id: user.id },
+      data: { otpCode, otpExpiry },
+    });
+    res.json({ messgae: "OTP sent to email" });
+  } catch (err) {
+    res.json(404).send({ message: err.message });
+  }
+};
 
 export {
   getUsers,
