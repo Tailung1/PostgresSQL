@@ -60,4 +60,5 @@ model sendEmail {
   user      users     @relation(fields: [userId], references: [id])
   otpCode   String?   @db.VarChar(255)
   otpExpiry DateTime? @db.Timestamp(6)
+  attempts  Int @default(0)
 }

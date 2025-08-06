@@ -160,13 +160,27 @@ export const resetPassword = async (req, res, next) => {
     const emailTable = await prisma.sendEmail.findFirst({
       where: { userId: user.id },
     });
+    if (emailTable.attempts > 2) {
+      await prisma.sendEmail.deleteMany({
+        where: { userId: emailTable.userId },
+      });
+      return res.status(400).send({
+        message:
+          "You used already 3 tries to enter correct Code. Please send new Reuqest for new code",
+      });
+    }
 
     if (
       emailTable.otpCode !== otpCode ||
       new Date() > emailTable.otpExpiry
     ) {
+      await prisma.sendEmail.update({
+        where: { id: emailTable.id },
+        data: { attempts: emailTable.attempts + 1 },
+      });
       return res.status(400).send({ message: "Invalid otpCode" });
     }
+
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     await prisma.users.update({
       where: { id: user.id },
