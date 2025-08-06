@@ -36,9 +36,8 @@ model users {
   password     String         @db.VarChar(255)
   roleId       Int            @default(2)
   userRole     roles          @relation(fields: [roleId], references: [id])
-  otpCode      String?        @db.VarChar(6)
-  otpExpiry    DateTime?      @db.Timestamp(6)
   userProducts userProducts[]
+  sendEmail    sendEmail[]
 }
 
 model userProducts {
@@ -53,4 +52,12 @@ model roles {
   id    Int     @id @default(autoincrement())
   name  String  @db.VarChar(255)
   users users[]
+}
+
+model sendEmail {
+  id        Int       @id @default(autoincrement())
+  userId    Int
+  user      users     @relation(fields: [userId], references: [id])
+  otpCode   String?   @db.VarChar(255)
+  otpExpiry DateTime? @db.Timestamp(6)
 }
