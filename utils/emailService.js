@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export default async (email, otpCode) => {
+export default async (email, otpCode, req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -72,6 +72,9 @@ export default async (email, otpCode) => {
     </html>
   `,
   };
-
-  await transporter.sendMail(mailOptions);
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    res.status(404).send({ message: err.message });
+  }
 };
