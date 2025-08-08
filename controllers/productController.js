@@ -93,6 +93,7 @@ async function deleteProdct(req, res) {
     // if (result.rows.length === 0) {
     //   return res.status(404).json({ error: "Product not found" });
     // }
+    
     const deletedProduct = await prisma.products.delete({
       where: { id: parseInt(id) },
     });
