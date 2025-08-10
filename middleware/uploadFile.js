@@ -1,6 +1,7 @@
 import multer from "multer";
 import fs from "fs";
 import path from "path";
+import { sourceMapsEnabled } from "process";
 
 const uploadDir = "./uploads";
 
@@ -27,3 +28,11 @@ const filterFiles = (req, file, cb) => {
     cb(new Error("Invalid file type"));
   }
 };
+
+const upload = multer({
+  storage: storage,
+  fileFilter: filterFiles,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+});
