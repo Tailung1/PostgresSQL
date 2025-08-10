@@ -12,14 +12,19 @@ import {
   resetPassword,
   uploadProfilePicture,
 } from "../controllers/userController.js";
+import upload from "../middleware/uploadFile.js";
 
 userRouter.route("/").get(getUsers).post(createUser);
-userRouter.route("/:id").get(getUser);
+userRouter
+  .route("/:id")
+  .get(getUser)
+  .put(updateUserInfo)
+  .delete(deleteUser);
 userRouter.route("/signin").post(signin);
-userRouter.route("/:id").put(updateUserInfo).delete(deleteUser);
+
 userRouter
   .route("/uploadProfilePicture/:id")
-  .post(uploadProfilePicture);
+  .post(upload.single("profilePicture"), uploadProfilePicture);
 
 userRouter.route("/signup").post(signup);
 userRouter.route("/forgot-password").post(forgotPassword);

@@ -196,7 +196,9 @@ export const resetPassword = async (req, res, next) => {
     res.status(404).send({ message: err.message });
   }
 };
-const uploadProfilePicture = async (req, res, next) => {};
+const uploadProfilePicture = async (req, res, next) => {
+  res.json({ messgae: "Profile picture uploaded successfully" });
+};
 
 export {
   getUsers,

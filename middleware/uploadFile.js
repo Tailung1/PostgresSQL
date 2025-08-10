@@ -1,24 +1,20 @@
 import multer from "multer";
-import fs from "fs";
+// import fs from "fs";
 import path from "path";
-import { sourceMapsEnabled } from "process";
 
 const uploadDir = "./uploads";
 
-const storage = multer.diskStorage(
-  {
-    destination: (req, file, cb) => {
-      cb(null, uploadDir);
-    },
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
   },
-  {
-    filename: (req, file, db) => {
-      const uniqieSuffix =
-        Date.now() + "-" + Math.round(Math.random() * 1e9);
-      cb(null, uniqieSuffix + path.extname(file.originalname));
-    },
-  }
-);
+
+  filename: (req, file, cb) => {
+    const uniqueSuffix =
+      Date.now() + "-" + Math.round(Math.random() * 1e9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
 
 const filterFiles = (req, file, cb) => {
   const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -36,3 +32,5 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5,
   },
 });
+
+export default upload;
