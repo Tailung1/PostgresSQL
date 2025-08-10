@@ -197,7 +197,21 @@ export const resetPassword = async (req, res, next) => {
   }
 };
 const uploadProfilePicture = async (req, res, next) => {
-  res.json({ messgae: "Profile picture uploaded successfully" });
+  const { id } = req.params;
+  const user = await prisma.users.findUnique({
+    where: { id: parseInt(id) },
+  });
+  if (!user) {
+    return res.status(404).send({ message: "User not found" });
+  }
+  await prisma.users.update({
+    where: { id: parseInt(id) },
+    data: { profilePicture: req.file.path },
+  });
+  return res.json({
+    message: "Profile picture uploaded successfully",
+    profilePictureInfo: req.file,
+  });
 };
 
 export {
