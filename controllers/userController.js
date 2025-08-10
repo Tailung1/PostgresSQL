@@ -196,6 +196,7 @@ export const resetPassword = async (req, res, next) => {
     res.status(404).send({ message: err.message });
   }
 };
+const uploadProfilePicture = async (req, res, next) => {};
 
 export {
   getUsers,
@@ -205,4 +206,5 @@ export {
   getUser,
   signup,
   signin,
+  uploadProfilePicture,
 };

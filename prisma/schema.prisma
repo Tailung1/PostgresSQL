@@ -28,16 +28,17 @@ model products {
 }
 
 model users {
-  id           Int            @id @default(autoincrement())
-  created_at   DateTime       @default(now()) @db.Timestamp(6)
-  firstName    String         @db.VarChar(255)
-  lastName     String         @db.VarChar(255)
-  email        String         @unique @db.VarChar(255)
-  password     String         @db.VarChar(255)
-  roleId       Int            @default(2)
-  userRole     roles          @relation(fields: [roleId], references: [id])
-  userProducts userProducts[]
-  sendEmail    sendEmail[]
+  id             Int            @id @default(autoincrement())
+  created_at     DateTime       @default(now()) @db.Timestamp(6)
+  firstName      String         @db.VarChar(255)
+  lastName       String         @db.VarChar(255)
+  email          String         @unique @db.VarChar(255)
+  password       String         @db.VarChar(255)
+  profilePicture String?        @db.VarChar(255)
+  roleId         Int            @default(2)
+  userRole       roles          @relation(fields: [roleId], references: [id])
+  userProducts   userProducts[]
+  sendEmail      sendEmail[]
 }
 
 model userProducts {
@@ -60,5 +61,5 @@ model sendEmail {
   user      users     @relation(fields: [userId], references: [id])
   otpCode   String?   @db.VarChar(255)
   otpExpiry DateTime? @db.Timestamp(6)
-  attempts  Int @default(0)
+  attempts  Int       @default(0)
 }
