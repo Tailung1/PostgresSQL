@@ -15,6 +15,8 @@ app.get("/", (req, res) => {
 app.use("/api/products", productRouter);
 app.use("/api/users", userRouter);
 
+app.use("/uploads",express.static("./uploads"))
+
 app.use((req, res, next) => {
   res.status(500).json({ error: "Something went wrong!" });
 });
