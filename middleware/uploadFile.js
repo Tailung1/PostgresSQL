@@ -16,7 +16,15 @@ const storage = multer.diskStorage({
 });
 
 const filterFiles = (req, file, cb) => {
-  const allowedFileTypes = ["image/jpeg", "image/png", "image/jpg"];
+  const allowedFileTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/jpg",
+    "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "application/vnd.ms-excel.template.macroEnabled.12",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+  ];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
