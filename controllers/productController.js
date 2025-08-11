@@ -2,6 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+// import xlsx from "xlsx";
 
 async function getProducts(req, res) {
   try {
@@ -93,7 +94,7 @@ async function deleteProdct(req, res) {
     // if (result.rows.length === 0) {
     //   return res.status(404).json({ error: "Product not found" });
     // }
-    
+
     const deletedProduct = await prisma.products.delete({
       where: { id: parseInt(id) },
     });
@@ -168,6 +169,16 @@ async function buyProduct(req, res) {
     res.status(404).send(err.message);
   }
 }
+
+async function uploadProductsExcel(req, res) {
+  //   console.log("d");
+  //   res.status(400).send({ message: "No file uploaded" });
+  //   console.log("d");
+  //   if (!req.file) {
+  //     return res.status(400).send({ message: "No file uploaded" });
+  //   }
+  //   const workbook = xlsx.readFile(req.file.path);
+}
 export {
   getProducts,
   createProduct,
@@ -176,4 +187,5 @@ export {
   getOneProduct,
   getCategoryStats,
   buyProduct,
+  uploadProductsExcel,
 };

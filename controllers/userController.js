@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 import EmailService from "../utils/emailService.js";
-import xlsx from "xlsx";
 
 async function getUsers(req, res) {
   try {
@@ -197,6 +196,7 @@ export const resetPassword = async (req, res, next) => {
     res.status(404).send({ message: err.message });
   }
 };
+
 const uploadProfilePicture = async (req, res, next) => {
   const { id } = req.params;
   const user = await prisma.users.findUnique({
@@ -215,13 +215,6 @@ const uploadProfilePicture = async (req, res, next) => {
   });
 };
 
-export const uploadProductsExcel = async (req, res) => {
-  if (!req.file) {
-    return res.status(400).send({ message: "No file uploaded" });
-  }
-  const workbook = xlsx.readFile(req.file.path);
-};
-
 export {
   getUsers,
   createUser,
@@ -231,5 +224,4 @@ export {
   signup,
   signin,
   uploadProfilePicture,
-  uploadProductsExcel,
 };

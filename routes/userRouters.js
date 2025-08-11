@@ -22,9 +22,11 @@ userRouter
   .delete(deleteUser);
 userRouter.route("/signin").post(signin);
 
-userRouter
-  .route("/uploadProfilePicture/:id")
-  .post(upload.single("profilePicture"), uploadProfilePicture);
+userRouter.post(
+  "/uploadProfilePicture/:id",
+  upload.single("profilePicture"),
+  uploadProfilePicture
+);
 
 userRouter.route("/signup").post(signup);
 userRouter.route("/forgot-password").post(forgotPassword);

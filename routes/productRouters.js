@@ -22,6 +22,6 @@ productRouter
   .delete(auth, isAdmin, deleteProdct);
 
 productRouter.post("/buyProduct/:id", auth, buyProduct);
-productRouter.route("./uploadProducts", uploadProductsExcel);
+productRouter.post("./uploadProducts", uploadProductsExcel);
 
 export default productRouter;
