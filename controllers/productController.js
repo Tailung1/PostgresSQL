@@ -1,5 +1,6 @@
 // import pool from "../config/db.config.js";
 import { PrismaClient } from "@prisma/client";
+import fs from "fs";
 
 const prisma = new PrismaClient();
 import xlsx from "xlsx";
@@ -186,6 +187,10 @@ async function uploadProductsExcel(req, res) {
       stock: product.stock,
     })),
   });
+  fs.unlinkSync(req.file.path);
+  return res
+    .status(200)
+    .send({ message: "Products added to databse successfully" });
 }
 export {
   getProducts,
