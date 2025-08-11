@@ -2,7 +2,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-// import xlsx from "xlsx";
+import xlsx from "xlsx";
 
 async function getProducts(req, res) {
   try {
@@ -171,13 +171,21 @@ async function buyProduct(req, res) {
 }
 
 async function uploadProductsExcel(req, res) {
-  //   console.log("d");
-  //   res.status(400).send({ message: "No file uploaded" });
-  //   console.log("d");
-  //   if (!req.file) {
-  //     return res.status(400).send({ message: "No file uploaded" });
-  //   }
-  //   const workbook = xlsx.readFile(req.file.path);
+  if (!req.file) {
+    return res.status(400).send({ message: "No file uploaded" });
+  }
+  const workbook = xlsx.readFile(req.file.path);
+  const sheetName = workbook.SheetNames[0];
+  const sheet = xlsx.utils.sheet_add_json(workbook.Sheets[sheetName]);
+
+  await prisma.products.createMany({
+    data: sheet.map((product) => ({
+      name: product.name,
+      price: product.price,
+      categoryId: product.categoryId,
+      stock: product.stock,
+    })),
+  });
 }
 export {
   getProducts,
