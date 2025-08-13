@@ -23,6 +23,7 @@ async function getProducts(req, res) {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
 async function getOneProduct(req, res) {
   const { id } = req.params;
   try {
