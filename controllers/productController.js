@@ -1,7 +1,6 @@
 // import pool from "../config/db.config.js";
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
-
 const prisma = new PrismaClient();
 import xlsx from "xlsx";
 
