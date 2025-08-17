@@ -146,7 +146,7 @@ async function buyProduct(req, res) {
     const user = await prisma.users.findUnique({
       where: { id: parseInt(userId) },
     });
-    
+
     if (!user) {
       return res.status(404).send("User not found");
     }
