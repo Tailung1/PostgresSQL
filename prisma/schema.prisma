@@ -25,7 +25,7 @@ model products {
   categoryID   Int            @default(1)
   category     category       @relation(fields: [categoryID], references: [id])
   userProducts userProducts[]
-  productImage productImage[]
+  images productImage[]
 }
 
 model users {
