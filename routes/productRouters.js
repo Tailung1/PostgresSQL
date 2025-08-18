@@ -1,6 +1,6 @@
 import express from "express";
 const productRouter = express.Router();
-import upload from "../middleware/uploadFile.js";
+import { uploadProducts } from "../middleware/uploadFile.js";
 
 import {
   getProducts,
@@ -26,7 +26,7 @@ productRouter.post("/buyProduct/:id", auth, buyProduct);
 productRouter.post(
   "/uploadProducts",
   upload.array("uploadProducts"),
-  uploadProductsExcel
+  uploadProducts
 );
 
 export default productRouter;

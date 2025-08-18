@@ -12,7 +12,7 @@ import {
   resetPassword,
   uploadProfilePicture,
 } from "../controllers/userController.js";
-import upload from "../middleware/uploadFile.js";
+import { uploadImage } from "../middleware/uploadFile.js";
 
 userRouter.route("/").get(getUsers).post(createUser);
 userRouter
@@ -24,7 +24,7 @@ userRouter.route("/signin").post(signin);
 
 userRouter.post(
   "/uploadProfilePicture/:id",
-  upload.single("profilePicture"),
+  uploadImage.single("profilePicture"),
   uploadProfilePicture
 );
 
