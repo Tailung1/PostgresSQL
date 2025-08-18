@@ -211,6 +211,9 @@ async function uploadProductImages(req, res) {
     }
     return res.status(400).send({ message: "Product not found" });
   }
+  if (!req.file || req.file.length === 0) {
+    return res.status(400).send({ message: "No files  upladed " });
+  }
 }
 
 export {
