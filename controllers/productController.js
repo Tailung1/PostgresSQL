@@ -176,7 +176,7 @@ async function uploadProductsExcel(req, res) {
   if (!req.file) {
     return res.status(400).send({ message: "No file uploaded" });
   }
-  
+
   const workbook = xlsx.readFile(req.file.path);
   const sheetName = workbook.SheetNames[0];
   const sheet = xlsx.utils.sheet_add_json(workbook.Sheets[sheetName]);
