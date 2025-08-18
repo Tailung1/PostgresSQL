@@ -211,9 +211,19 @@ async function uploadProductImages(req, res) {
     }
     return res.status(400).send({ message: "Product not found" });
   }
-  if (!req.file || req.file.length === 0) {
-    return res.status(400).send({ message: "No files  upladed " });
+  console.log(req.files);
+
+  if (!req.files || req.files.length === 0) {
+    return res.status(400).send({ message: "No files  uploaded " });
   }
+
+  await prisma.productImage.createMany({
+    data: req.files.map((file) => ({
+      productId: parseInt(id),
+      url: file.path,
+    })),
+  });
+  return res.status(200).send({ message: "Files  uploaded " });
 }
 
 export {
