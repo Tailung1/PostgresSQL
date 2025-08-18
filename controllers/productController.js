@@ -194,6 +194,11 @@ async function uploadProductsExcel(req, res) {
     .status(200)
     .send({ message: "Products added to databse successfully" });
 }
+
+async function uploadProductImages(req, res) {
+  res.json({ message: "Images uploaded successfully" });
+}
+
 export {
   getProducts,
   createProduct,
@@ -203,4 +208,5 @@ export {
   getCategoryStats,
   buyProduct,
   uploadProductsExcel,
+  uploadProductImages,
 };

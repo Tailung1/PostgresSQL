@@ -40,10 +40,10 @@ const filterImage = (req, file, cb) => {
 
 const filterProductPictures = (req, file, cb) => {
   const allowedFileTypes = [
-    "application/vnd.ms-excel",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "application/vnd.ms-excel.template.macroEnabled.12",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+    "image/jpeg",
+    "image/png",
+    "image/jpg",
+    "image/svg+xml",
   ];
   if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
@@ -58,7 +58,7 @@ const uploadImage = multer({
     fileSize: 1024 * 1024 * 5,
   },
 });
-const uploadProductImages = multer({
+const uploadProductImagesExcel = multer({
   storage: storage,
   fileFilter: filterProductPictures,
   limits: {
@@ -74,4 +74,4 @@ const uploadProducts = multer({
   },
 });
 
-export { uploadImage, uploadProductImages, uploadProducts };
+export { uploadImage, uploadProductImagesExcel, uploadProducts };

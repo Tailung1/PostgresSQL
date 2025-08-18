@@ -1,6 +1,9 @@
 import express from "express";
 const productRouter = express.Router();
-import { uploadProducts } from "../middleware/uploadFile.js";
+import {
+  uploadProducts,
+  uploadProductImagesExcel,
+} from "../middleware/uploadFile.js";
 
 import {
   getProducts,
@@ -11,6 +14,7 @@ import {
   getCategoryStats,
   buyProduct,
   uploadProductsExcel,
+  uploadProductImages,
 } from "../controllers/productController.js";
 import { auth, isAdmin } from "../middleware/auth.js";
 
@@ -23,10 +27,16 @@ productRouter
   .delete(auth, isAdmin, deleteProdct);
 
 productRouter.post("/buyProduct/:id", auth, buyProduct);
+
 productRouter.post(
   "/uploadProducts",
   uploadProducts.array("uploadProducts"),
   uploadProductsExcel
+);
+productRouter.post(
+  "/uploadProductImages/:id",
+  uploadProductImagesExcel.array("UploadImages", 5),
+  uploadProductImages
 );
 
 export default productRouter;
