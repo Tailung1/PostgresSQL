@@ -196,7 +196,21 @@ async function uploadProductsExcel(req, res) {
 }
 
 async function uploadProductImages(req, res) {
-  res.json({ message: "Images uploaded successfully" });
+  const { id } = req.params;
+
+  const product = await prisma.products.findUnique({
+    where: { id: parseInt(id) },
+  });
+  if (!product) {
+    if (req.files.length > 0) {
+      req.files.forEach((file) => {
+        if (fs.existsSync(file.path)) {
+          fs.unlinkSync(file.path);
+        }
+      });
+    }
+    return res.status(400).send({ message: "Product not found" });
+  }
 }
 
 export {

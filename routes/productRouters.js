@@ -30,7 +30,7 @@ productRouter.post("/buyProduct/:id", auth, buyProduct);
 
 productRouter.post(
   "/uploadProducts",
-  uploadProducts.array("uploadProducts"),
+  uploadProducts.single("uploadProducts"),
   uploadProductsExcel
 );
 productRouter.post(
