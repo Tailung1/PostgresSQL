@@ -25,8 +25,8 @@ productRouter
 productRouter.post("/buyProduct/:id", auth, buyProduct);
 productRouter.post(
   "/uploadProducts",
-  upload.array("uploadProducts"),
-  uploadProducts
+  uploadProducts.array("uploadProducts"),
+  uploadProductsExcel
 );
 
 export default productRouter;

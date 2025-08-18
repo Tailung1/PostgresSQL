@@ -15,14 +15,14 @@ const storage = multer.diskStorage({
   },
 });
 
-const filterExcelProducts = (req, res, cb) => {
+const filterExcelProducts = (req, file, cb) => {
   const allowedFileTypes = [
     "application/vnd.ms-excel",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "application/vnd.ms-excel.template.macroEnabled.12",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
   ];
-  if (allowedFileTypes.includes(req.file.mimetype)) {
+  if (allowedFileTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
     cb(new Error("Invalid file type for excel products"));
@@ -38,7 +38,7 @@ const filterImage = (req, file, cb) => {
   }
 };
 
-const filterExcel = (req, file, cb) => {
+const filterProductPictures = (req, file, cb) => {
   const allowedFileTypes = [
     "application/vnd.ms-excel",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -60,7 +60,7 @@ const uploadImage = multer({
 });
 const uploadExcel = multer({
   storage: storage,
-  fileFilter: filterExcel,
+  fileFilter: filterProductPictures,
   limits: {
     fileSize: 1024 * 1024 * 10,
   },
