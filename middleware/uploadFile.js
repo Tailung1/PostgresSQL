@@ -58,7 +58,7 @@ const uploadImage = multer({
     fileSize: 1024 * 1024 * 5,
   },
 });
-const uploadExcel = multer({
+const uploadProductImages = multer({
   storage: storage,
   fileFilter: filterProductPictures,
   limits: {
@@ -74,4 +74,4 @@ const uploadProducts = multer({
   },
 });
 
-export { uploadImage, uploadExcel, uploadProducts };
+export { uploadImage, uploadProductImages, uploadProducts };
