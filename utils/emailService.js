@@ -9,6 +9,7 @@ export default async (email, otpCode, req, res) => {
     },
   });
 
+  
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
