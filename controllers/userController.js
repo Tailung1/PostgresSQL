@@ -146,6 +146,7 @@ export const forgotPassword = async (req, res, next) => {
   }
 };
 
+
 export const resetPassword = async (req, res, next) => {
   const { email, otpCode, newPassword } = req.body;
   try {
