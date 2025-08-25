@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { JwtErrorHndler } from "../utils/errorhandler.js";
 
 export const auth = (req, res, next) => {
   const token = req.headers.authorization.split(" ")[1];
@@ -7,7 +8,8 @@ export const auth = (req, res, next) => {
   }
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ message: "Unauthorized2" });
+      next(JwtErrorHndler());
+      // return res.status(401).json({ message: "Unauthorized1" });
     }
     req.user = decoded;
     next();

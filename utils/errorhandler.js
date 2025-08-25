@@ -34,3 +34,7 @@ export const handleError = (err, req, res, next) => {
     });
   }
 };
+
+export const JwtErrorHndler = () => {
+  return new AppError("Invalid token, Please login again", 401);
+};
