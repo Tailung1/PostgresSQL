@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 import EmailService from "../utils/emailService.js";
-import { AppError } from "../utils/errorhander.js";
+import { AppError } from "../utils/errorhandler.js";
 
 async function getUsers(req, res) {
   try {

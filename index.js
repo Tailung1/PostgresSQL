@@ -5,7 +5,7 @@ dotenv.config();
 import express from "express";
 const app = express();
 const port = process.env.PORT || 3000;
-import { handleError } from "./utils/errorhander.js";
+import { AppError, handleError } from "./utils/errorhandler.js";
 
 app.use(express.json());
 
@@ -18,9 +18,17 @@ app.use("/api/users", userRouter);
 
 app.use("/uploads", express.static("./uploads"));
 
-app.use((req, res, next) => {
-  res.status(500).json({ error: "Something went wrong!" });
-});
+// Causing error !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+// app.all("*", (req, res, next) => {
+//   next(
+//     new AppError(`Can't find ${req.originalUrl} on this server`, 404)
+//   );
+// });
+
+// app.use((req, res, next) => {
+//   res.status(500).json({ error: "Something went wrong!" });
+// });
 app.use(handleError);
 
 app.listen(port, () => {
