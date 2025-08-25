@@ -6,8 +6,10 @@ import express from "express";
 const app = express();
 const port = process.env.PORT || 3000;
 import { AppError, handleError } from "./utils/errorhandler.js";
-
+import cors from "cors";
+const corsOptions = process.env.ENABLE_ORIGINS.split(",");
 app.use(express.json());
+app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.json("Welcome to the Express PostgreSQL API");
