@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const prisma = new PrismaClient();
 import EmailService from "../utils/emailService.js";
+import { AppError } from "../utils/errorhander.js";
 
 async function getUsers(req, res) {
   try {
@@ -111,7 +112,7 @@ async function signin(req, res, next) {
       include: { userRole: true },
     });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return next(AppError("No user found with the provided email"));
     }
     const isPasswordValid = await bcrypt.compare(
       password,
