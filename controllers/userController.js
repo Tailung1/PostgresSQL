@@ -112,16 +112,16 @@ async function signin(req, res, next) {
       include: { userRole: true },
     });
     if (!user) {
-      return next(AppError("No user found with the provided email"));
+      return next(
+        new AppError("No user found with the provided email", 400)
+      );
     }
     const isPasswordValid = await bcrypt.compare(
       password,
       user.password
     );
     if (!isPasswordValid) {
-      return res
-        .status(401)
-        .json({ message: "Password does not match" });
+      return next(new AppError("Password does not match", 400));
     }
     const token = jwt.sign(
       { id: user.id, role: user.userRole.name },
