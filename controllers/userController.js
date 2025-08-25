@@ -7,9 +7,20 @@ import EmailService from "../utils/emailService.js";
 async function getUsers(req, res) {
   try {
     const result = await prisma.users.findMany({
-      include: { userProducts: { include: { product: true } } },
+      include: {
+        userProducts: {
+          include: {
+            product: true,
+          },
+        },
+        userRole: { select: { name: true } },
+      },
     });
-    res.status(200).json(result);
+    const flattenedResult = result.map((data) => ({
+      ...data,
+      userRole: data.userRole.name,
+    }));
+    res.status(200).json(flattenedResult);
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
@@ -92,29 +103,40 @@ async function signup(req, res) {
     res.status(500).json({ error: "Failed to signup" });
   }
 }
-async function signin(req, res) {
+async function signin(req, res, next) {
   const { email, password } = req.body;
-  const user = await prisma.users.findUnique({
-    where: { email },
-    include: { userRole: true },
-  });
-  const isPasswordValid = await bcrypt.compare(
-    password,
-    user.password
-  );
-  if (!isPasswordValid) {
-    return res.status(500).json({ message: "Invalid credentials" });
-  }
-  const token = jwt.sign(
-    { id: user.id, role: user.userRole.name },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "1h",
+  try {
+    const user = await prisma.users.findUnique({
+      where: { email },
+      include: { userRole: true },
+    });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  );
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.password
+    );
+    if (!isPasswordValid) {
+      return res
+        .status(401)
+        .json({ message: "Password does not match" });
+    }
+    const token = jwt.sign(
+      { id: user.id, role: user.userRole.name },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
 
-  delete user.password;
-  res.json({ token, user });
+    delete user.password;
+    res.json({ token, user });
+  } catch (err) {
+    res
+      .status(501)
+      .send({ message: "Failed to sign in," }, err.message);
+  }
 }
 export const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
@@ -145,7 +167,6 @@ export const forgotPassword = async (req, res, next) => {
     res.status(404).send({ message: err.message });
   }
 };
-
 
 export const resetPassword = async (req, res, next) => {
   const { email, otpCode, newPassword } = req.body;
