@@ -130,7 +130,6 @@ async function signin(req, res, next) {
         expiresIn: "1h",
       }
     );
-
     delete user.password;
     res.json({ token, user });
   } catch (err) {
