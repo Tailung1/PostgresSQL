@@ -22,6 +22,7 @@ userRouter
   .delete(deleteUser);
 userRouter.route("/signin").post(signin);
 
+
 userRouter.post(
   "/uploadProfilePicture/:id",
   uploadImage.single("profilePicture"),
